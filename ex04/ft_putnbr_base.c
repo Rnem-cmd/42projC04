@@ -12,23 +12,70 @@
 
 #include <unistd.h>
 
-void	ft_putnbr_base(int nbr, char *base)
-{
-	int	mod;
-	int	base_len;
-	int	i;
+void	ft_putnbr_base(int nbr, char *base);
+int	ft_strlen(char *str);
+void	ft_print_nbr(int nbr, int base_value, char *base);
+void	ft_putchar(char c);
 
-	base_len = 0;
-	i = 0;
-	if(base[i] || base[i] != base[i +1] || base[i] != '+' || base[i] += '-')
-		while (base[base_len]);
-			base_len++;
-		mod = nbr % base_len;
-		ft_putnbr_base(nbr / base_len, base);
-		write(1, &mod, 1);
+int	main()
+{
+	int	n = 42;
+	char	s[] = "poneyvif";
+
+	ft_putnbr_base(n, s);
 }
 
-int	main(int argc, char *argv)
+void	ft_putnbr_base(int nbr, char *base)
 {
-	
+	int		base_value;
+
+	base_value = ft_strlen(base);
+	if (base_value < 2)
+		return;
+	ft_print_nbr(nbr, base_value, base);
+	write(1, "\n", 1);
+}
+
+int	ft_strlen(char *base)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (base[i])
+	{
+		if (base[i] == '+' || base[i] == '-')
+			return (0);
+		j = i + 1;
+		while (base[j])
+		{
+			if (base[i] == base[j])
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (i);
+}
+
+void	ft_print_nbr(int nbr, int base_value, char *base)
+{
+	long	nbrl;
+
+	nbrl = nbr;
+	if (nbrl <  0)
+	{
+		nbrl = -nbrl;
+		ft_putchar('-');
+	}
+
+	if (nbrl >= base_value)
+		ft_print_nbr(nbrl / base_value, base_value, base);
+	ft_putchar(base[nbrl % base_value]);
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+
 }
